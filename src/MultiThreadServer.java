@@ -20,7 +20,7 @@ public class MultiThreadServer {
 	private static ServerSocket serverSocket = null;
 	private static Socket clientSocket = null;
 
-	private static int maxClientsCount = 10;
+	private static int maxClientsCount = 100;
 	private static ClientThread[] threads = new ClientThread[maxClientsCount];
 	
 	private static HashMap<String, ArrayList<Room>> roomSearchHash = new HashMap<String, ArrayList<Room>>();
