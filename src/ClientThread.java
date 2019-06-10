@@ -2,13 +2,10 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collector;
 
 /**
  * 
@@ -151,6 +148,7 @@ public class ClientThread extends Thread {
 						for(int j=0; j<roomMembers.size(); j++) { 
 							threads[num].os.writeUTF("@score "+threads[roomMembers.get(j).getThreadNum()].getClientID()+" "+roomMembers.get(j).getScore());
 						}
+						threads[num].os.writeUTF("@scoreEnd");
 					}
 					
 				}
