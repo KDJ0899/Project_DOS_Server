@@ -159,6 +159,7 @@ public class ClientThread extends Thread {
 								roomMembers.remove(i);
 							}
 						}
+							
 						
 						for(int i=0; i<roomMembers.size(); i++) { 
 							obj=roomMembers.get(i);
@@ -194,8 +195,6 @@ public class ClientThread extends Thread {
 		ArrayList<RoomMember> newRoomList;
 		for(int i=0; i<roomList.size();i++) {
 			newRoomList=roomList.get(i).getRoomMembers();
-			if(roomList.get(i).isStart()&&newRoomList.size()==0)
-				roomList.remove(i);
 			
 			if(roomList.get(i).isVoiceMode()==voiceMode&&!roomList.get(i).isStart()&&newRoomList.size()<=maxRoomMember) {
 				newRoomList.add(new RoomMember (threadNum,0,0));
