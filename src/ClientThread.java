@@ -170,12 +170,27 @@ public class ClientThread extends Thread {
 								threads[num].os.writeUTF("@ready "+roomMembers.get(j).getReady());
 							}
 						}
+						
+						roomList.clear();
+						room=null;
+						roomMembers.clear();
 					}
 					System.out.println("Exit");
 				}
 				else if(line.startsWith("@exit")) {
 					stop=true;
 					threads[index]=null;
+				}
+				else if(line.startsWith("@useItem")) {
+					words=line.split(" ");
+					String user=words[1];
+					String item =words[2];
+					for(int i=0; i<roomMembers.size(); i++) {
+						if(threads[roomMembers.get(i).getThreadNum()].getClientID().equals(user)) {
+							threads[roomMembers.get(i).getThreadNum()].os.writeUTF("@item "+ item);
+							break;
+							}
+						}
 				}
 				else {
 					for (int i = 0; i < maxClientsCount; i++) {
