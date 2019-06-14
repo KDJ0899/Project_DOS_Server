@@ -23,7 +23,7 @@ public class ClientThread extends Thread {
 	private final  ClientThread[] threads;
 	private int index;
 	private int maxClientsCount;
-	private int maxRoomMember =4;
+	private int maxRoomMember =8;
 	
 	private ArrayList<Room> roomList;
 	private Room room;
@@ -171,9 +171,8 @@ public class ClientThread extends Thread {
 							}
 						}
 						
-						roomList.clear();
+						
 						room=null;
-						roomMembers.clear();
 					}
 					System.out.println("Exit");
 				}
@@ -210,6 +209,13 @@ public class ClientThread extends Thread {
 		ArrayList<RoomMember> newRoomList;
 		for(int i=0; i<roomList.size();i++) {
 			newRoomList=roomList.get(i).getRoomMembers();
+			
+			if(roomList.get(i).isVoiceMode()==voiceMode)
+				System.out.println("Voice");
+			if(!roomList.get(i).isStart())
+				System.out.println("Start");
+			if(newRoomList.size()<=maxRoomMember)
+				System.out.println("Number");
 			
 			if(roomList.get(i).isVoiceMode()==voiceMode&&!roomList.get(i).isStart()&&newRoomList.size()<=maxRoomMember) {
 				newRoomList.add(new RoomMember (threadNum,0,0));
