@@ -23,7 +23,7 @@ public class ClientThread extends Thread {
 	private final  ClientThread[] threads;
 	private int index;
 	private int maxClientsCount;
-	private int maxRoomMember =8;
+	private int maxRoomMember = 7;
 	
 	private ArrayList<Room> roomList;
 	private Room room;
