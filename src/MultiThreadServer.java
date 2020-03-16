@@ -29,9 +29,6 @@ public class MultiThreadServer {
 
 	public static void main(String args[]) {
 		
-		
-	
-		
 		musicList = new String[5];
 		musicList[0] = "HAPPY ROCK";
 		musicList[1] = "BLANK";

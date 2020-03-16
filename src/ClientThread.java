@@ -204,23 +204,16 @@ public class ClientThread extends Thread {
 		}	
 	}
 	
-	public ArrayList<RoomMember> searchRoom(int musicIndex){  //서버에서 받아온 방 리스트에서 적절한 방을 고르는 메소드
+	public synchronized ArrayList<RoomMember> searchRoom(int musicIndex){  //서버에서 받아온 방 리스트에서 적절한 방을 고르는 메소드
 		roomList=MultiThreadServer.searchRoomList(musicIndex);
-		ArrayList<RoomMember> newRoomList;
+		ArrayList<RoomMember> newRoomMembers;
 		for(int i=0; i<roomList.size();i++) {
-			newRoomList=roomList.get(i).getRoomMembers();
+			newRoomMembers=roomList.get(i).getRoomMembers();
 			
-			if(roomList.get(i).isVoiceMode()==voiceMode)
-				System.out.println("Voice");
-			if(!roomList.get(i).isStart())
-				System.out.println("Start");
-			if(newRoomList.size()<=maxRoomMember)
-				System.out.println("Number");
-			
-			if(roomList.get(i).isVoiceMode()==voiceMode&&!roomList.get(i).isStart()&&newRoomList.size()<=maxRoomMember) {
-				newRoomList.add(new RoomMember (threadNum,0,0));
+			if(roomList.get(i).isVoiceMode()==voiceMode&&!roomList.get(i).isStart()&&newRoomMembers.size()<=maxRoomMember) {
+				newRoomMembers.add(new RoomMember (threadNum,0,0));
 				room=roomList.get(i);
-				return newRoomList;
+				return newRoomMembers;
 			}
 				
 		}
