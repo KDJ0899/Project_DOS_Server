@@ -44,7 +44,7 @@ public class ClientThread extends Thread {
 		int maxClientsCount = this.maxClientsCount;
 		ClientThread[] threads = this.threads;
 		
-		RoomMember obj;
+		RoomMember roomMember;
 		int num=0;
 		String[] words;
 		
@@ -75,8 +75,8 @@ public class ClientThread extends Thread {
 					roomMembers=searchRoom(Integer.parseInt(words[1]));
 					
 					for(int i=0; i<roomMembers.size(); i++) { // 방의 정보가 업데이트 될때 마다 해당방 클라이언트에게 신호를 보냄.
-						obj=roomMembers.get(i);
-						num=obj.getThreadNum();
+						roomMember=roomMembers.get(i);
+						num=roomMember.getThreadNum();
 						threads[num].os.writeUTF("@roomReset");
 						for(int j=0; j<roomMembers.size(); j++) { 
 							threads[num].os.writeUTF("@room "+threads[roomMembers.get(j).getThreadNum()].getClientID());
@@ -84,10 +84,6 @@ public class ClientThread extends Thread {
 						}
 					}
 					
-				}
-				else if(line.startsWith("@id")) { //클라이언트 아이디 값
-					words=line.split(" ");
-					clientID=words[1];
 				}
 				else if(line.startsWith("@ready")) {
 					
@@ -97,22 +93,27 @@ public class ClientThread extends Thread {
 							break;
 						}
 					}
-					obj=roomMembers.get(num);
+					roomMember=roomMembers.get(num);
 					
-					if(obj.getReady()==1)
-						obj.setReady(0);
+					if(roomMember.getReady()==1)
+						roomMember.setReady(0);
 					else
-						obj.setReady(1);
+						roomMember.setReady(1);
 					
 					for(int i=0; i<roomMembers.size(); i++) { // 방의 정보가 업데이트 될때 마다 해당방 클라이언트에게 신호를 보냄.
-						obj=roomMembers.get(i);
-						num=obj.getThreadNum();
+						roomMember=roomMembers.get(i);
+						num=roomMember.getThreadNum();
 						threads[num].os.writeUTF("@readyReset");
 						for(int j=0; j<roomMembers.size(); j++) { 
 							threads[num].os.writeUTF("@ready "+roomMembers.get(j).getReady());
 						}
 					}
 				}
+				else if(line.startsWith("@id")) { //클라이언트 아이디 값
+					words=line.split(" ");
+					clientID=words[1];
+				}
+			
 				else if(line.startsWith("@start")) {
 					for(int i=0; i<roomMembers.size();i++) {
 						threads[roomMembers.get(i).getThreadNum()].os.writeUTF("@start");
@@ -142,8 +143,8 @@ public class ClientThread extends Thread {
 					
 					
 					for(int i=0; i<roomMembers.size(); i++) { 
-						obj=roomMembers.get(i);
-						num=obj.getThreadNum();
+						roomMember=roomMembers.get(i);
+						num=roomMember.getThreadNum();
 						threads[num].os.writeUTF("@scoreReset");
 						for(int j=0; j<roomMembers.size(); j++) { 
 							threads[num].os.writeUTF("@score "+threads[roomMembers.get(j).getThreadNum()].getClientID()+" "+roomMembers.get(j).getScore());
@@ -162,8 +163,8 @@ public class ClientThread extends Thread {
 							
 						
 						for(int i=0; i<roomMembers.size(); i++) { 
-							obj=roomMembers.get(i);
-							num=obj.getThreadNum();
+							roomMember=roomMembers.get(i);
+							num=roomMember.getThreadNum();
 							threads[num].os.writeUTF("@roomReset");
 							for(int j=0; j<roomMembers.size(); j++) { 
 								threads[num].os.writeUTF("@room "+threads[roomMembers.get(j).getThreadNum()].getClientID());
